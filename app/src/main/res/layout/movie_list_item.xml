@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="130dp"
+        android:layout_height="230dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardCornerRadius="10dp"
+        android:clipToPadding="true"
+        android:id="@+id/itemView"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp"
+
+        >
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/image_progress"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:indeterminate="true"
+            android:theme="@style/AppTheme.Progressbar"
+            app:layout_constraintEnd_toEndOf="@+id/movie_image"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_image"
+            app:layout_constraintTop_toTopOf="@+id/movie_image"
+            app:layout_constraintStart_toStartOf="@+id/movie_image" />
+
+        <ImageView
+            android:id="@+id/movie_image"
+            android:layout_width="130dp"
+            android:layout_height="200dp"
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="movie_poster"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/movie_title"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textSize="@dimen/_12ssp" />
+
+
+    </androidx.cardview.widget.CardView>
+</layout>
