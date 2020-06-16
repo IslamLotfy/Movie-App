@@ -1,4 +1,4 @@
-package com.we.movieapp.domain.mapper
+package com.we.movieapp.data.mapper
 
 import com.we.movieapp.domain.entities.MovieEntity
 import com.we.movieapp.data.entities.movies.MovieRemote

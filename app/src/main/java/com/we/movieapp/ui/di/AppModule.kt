@@ -4,16 +4,20 @@ import android.app.Application
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
-import com.we.movieapp.*
+import com.we.movieapp.BuildConfig
 import com.we.movieapp.data.network.ApiKeyInterceptor
 import com.we.movieapp.ui.viewmodel.BaseSchedulerProvider
 import com.we.movieapp.data.repository.RemoteRepository
 import com.we.movieapp.data.network.ServiceApi
-import com.we.movieapp.domain.mapper.MovieMapper
+import com.we.movieapp.data.mapper.MovieMapper
+import com.we.movieapp.data.mapper.PersonMapper
+import com.we.movieapp.data.mapper.TVMapper
 import com.we.movieapp.domain.usecases.MovieUseCase
-import com.we.movieapp.ui.view.adapter.HomeMovieAdapter
 import com.we.movieapp.ui.viewmodel.SchedulerProvider
 import com.we.movieapp.ui.mapper.MovieMapperUi
+import com.we.movieapp.ui.mapper.PersonMapperUi
+import com.we.movieapp.ui.mapper.TVMapperUi
+import com.we.movieapp.ui.view.adapter.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.*
@@ -52,6 +56,26 @@ class AppModule {
     fun getHomeMovieAdapter() =
         HomeMovieAdapter()
 
+    @Provides
+    @Singleton
+    fun getPopularMovieAdapter() =
+        PersonsAdapter()
+
+    @Provides
+    @Singleton
+    fun getTvsAdapter() =
+        TvsAdapter()
+
+    @Provides
+    @Singleton
+    fun getRecommendationMoviesAdapter() =
+        RecommendationMoviesAdapter()
+
+    @Provides
+    @Singleton
+    fun getSimilarMoviesAdapter() =
+        SimilarMoviesAdapter()
+
 
     @Provides
     @Singleton
@@ -60,6 +84,22 @@ class AppModule {
     @Provides
     @Singleton
     fun getMovieMapperUi() = MovieMapperUi()
+
+    @Provides
+    @Singleton
+    fun getPersonMapper() = PersonMapper()
+
+    @Provides
+    @Singleton
+    fun getPersonMapperUi() = PersonMapperUi()
+
+    @Provides
+    @Singleton
+    fun getTVMapper() = TVMapper()
+
+    @Provides
+    @Singleton
+    fun getTVMapperUi() = TVMapperUi()
 
 
 //    @Provides
@@ -137,11 +177,10 @@ class AppModule {
     fun providesTaskBaseScheduler(): BaseSchedulerProvider =
         SchedulerProvider()
 
-    //
     @Singleton
     @Provides
-    fun providesMoviesRepository(service: ServiceApi, mapper: MovieMapper) =
-        RemoteRepository(service, mapper)
+    fun providesMoviesRepository(service: ServiceApi, mapper: MovieMapper, personMapper: PersonMapper, tvMapper: TVMapper) =
+        RemoteRepository(service, mapper, personMapper, tvMapper)
 
     @Singleton
     @Provides

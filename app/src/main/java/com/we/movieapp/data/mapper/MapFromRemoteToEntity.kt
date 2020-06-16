@@ -1,4 +1,4 @@
-package com.we.movieapp.domain.mapper
+package com.we.movieapp.data.mapper
 
 
 interface MapFromRemoteToEntity<R , E> {

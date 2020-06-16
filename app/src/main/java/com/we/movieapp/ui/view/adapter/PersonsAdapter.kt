@@ -10,13 +10,14 @@ import com.squareup.picasso.Picasso
 import com.we.movieapp.R
 import com.we.movieapp.databinding.MovieListItemBinding
 import com.we.movieapp.ui.entities.MovieUiModel
+import com.we.movieapp.ui.entities.PersonUiModel
 
-class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.ViewHolder>() {
+class PersonsAdapter : RecyclerView.Adapter<PersonsAdapter.ViewHolder>() {
 
-    private val movies: MutableList<MovieUiModel> = ArrayList()
+    private val movies: MutableList<PersonUiModel> = ArrayList()
     private var layoutInflater: LayoutInflater? = null
 
-    var onMovieClickListener: OnMovieClickListener? = null
+    var onOnPersonClickListener: OnPersonClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, i: Int): ViewHolder {
 
@@ -45,9 +46,9 @@ class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.ViewHolder>() {
 //        viewHolder.binding.movie = movies[position]
 
 
-        viewHolder.binding.movieTitle.text = movies[position].title
+//        viewHolder.binding.movieTitle.text = movies[position].name
         Handler().postDelayed(Runnable {  Picasso.get()
-            .load("https://image.tmdb.org/t/p/w200/${movies[position].posterPath}")
+            .load("https://image.tmdb.org/t/p/w200/${movies[position].profilePath}")
             .into(viewHolder.binding.movieImage, object : Callback {
                 override fun onSuccess() {
                     viewHolder.binding.imageProgress.hide()
@@ -61,14 +62,14 @@ class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.ViewHolder>() {
             )},1000)
 
         viewHolder.binding.itemView.setOnClickListener {
-            onMovieClickListener?.setOnMovieClickListener(movies[position].id)
+            onOnPersonClickListener?.setOnPersonClickListener(movies[position].id)
         }
 
     }
 
     override fun getItemCount() = movies.size
 
-    fun submitList(newMovies: List<MovieUiModel>?) {
+    fun submitList(newMovies: List<PersonUiModel>?) {
         newMovies?.let {
             movies.addAll(it)
             val uniqueMovieList = movies.distinctBy { movie ->
@@ -86,8 +87,8 @@ class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    interface OnMovieClickListener {
-        fun setOnMovieClickListener(movieId: Int)
+    interface OnPersonClickListener {
+        fun setOnPersonClickListener(movieId: Int)
     }
 
     class ViewHolder(val binding: MovieListItemBinding) :

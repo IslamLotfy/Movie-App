@@ -5,13 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CC666565"
     tools:context=".ui.view.activity.HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
         android:orientation="vertical"
+        android:background="?android:selectableItemBackground"
         android:padding="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +26,7 @@
                 android:id="@+id/movie_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Movies"
+                android:text="@string/movies"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@id/movie_more_btn"
@@ -38,7 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:background="@color/colorPrimary"
-                android:text="More"
+                android:text="@string/more"
                 android:textColor="#FFF"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -46,7 +47,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/movie_recycler_view_list"
                 android:layout_width="0dp"
-                android:layout_height="160dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -71,7 +72,150 @@
                 android:id="@+id/movie_error"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="No Results"
+                android:text="@string/no_results"
+                android:textSize="24sp"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_margin="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/person_container"
+            app:layout_constraintTop_toBottomOf="@id/movie_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/person_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/persons"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/person_more_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/person_more_btn"/>
+
+            <Button
+                android:id="@+id/person_more_btn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/more"
+                android:textColor="#FFF"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/person_recycler_view_list"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="14dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/person_more_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:listitem="@layout/person_list_item"/>
+
+            <ProgressBar
+                android:id="@+id/person_loading"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/person_recycler_view_list"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/person_recycler_view_list"
+                tools:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/person_error"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/no_results"
+                android:textSize="24sp"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_margin="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tv_container"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/person_container"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/tvs"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_more_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_more_btn"/>
+
+            <Button
+                android:id="@+id/tv_more_btn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/more"
+                android:textColor="#FFF"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tv_recycler_view_list"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="14dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_more_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:listitem="@layout/tv_list_item"/>
+
+            <ProgressBar
+                android:id="@+id/tv_loading"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/tv_recycler_view_list"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tv_recycler_view_list"
+                tools:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/tv_error"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/no_results"
                 android:textSize="24sp"
                 android:visibility="gone"
                 android:gravity="center"

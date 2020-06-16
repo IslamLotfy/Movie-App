@@ -11,7 +11,7 @@ import com.we.movieapp.R
 import com.we.movieapp.databinding.MovieListItemBinding
 import com.we.movieapp.ui.entities.MovieUiModel
 
-class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.ViewHolder>() {
+class RecommendationMoviesAdapter : RecyclerView.Adapter<RecommendationMoviesAdapter.ViewHolder>() {
 
     private val movies: MutableList<MovieUiModel> = ArrayList()
     private var layoutInflater: LayoutInflater? = null
@@ -45,7 +45,7 @@ class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.ViewHolder>() {
 //        viewHolder.binding.movie = movies[position]
 
 
-        viewHolder.binding.movieTitle.text = movies[position].title
+//        viewHolder.binding.movieTitle.text = movies[position].title
         Handler().postDelayed(Runnable {  Picasso.get()
             .load("https://image.tmdb.org/t/p/w200/${movies[position].posterPath}")
             .into(viewHolder.binding.movieImage, object : Callback {

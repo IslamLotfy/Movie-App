@@ -13,7 +13,7 @@ fun HomeActivity.showMessage(message: String) {
 //    Snackbar.make(coordinator_layout, message, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT).show()
 }
 
-fun HomeActivity.startDetailsScreen(id: String) {
+fun HomeActivity.startDetailsScreen(id: Int) {
 //    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
 //                    this, imageView,
 //                    getString(R.string.image_transition_name)
@@ -33,8 +33,8 @@ fun HomeActivity.setVisibility(isLoading: Boolean, errorMessage: String? = null)
     movie_loading.visibility = if (isLoading) View.VISIBLE else View.GONE
     movie_recycler_view_list.visibility = if (isLoading) View.GONE else View.VISIBLE
     errorMessage?.let {
-        movie_error.visibility = if (isLoading) View.GONE else View.VISIBLE
-        movie_error.text = it
+        person_error.visibility = if (isLoading) View.GONE else View.VISIBLE
+        person_error.text = it
     }
 }
 
@@ -43,6 +43,18 @@ fun HomeActivity.bindViews() {
         itemAnimator = DefaultItemAnimator()
         setHasFixedSize(true)
         adapter = homeMovieAdapter
+    }
+
+    with(person_recycler_view_list){
+        itemAnimator = DefaultItemAnimator()
+        setHasFixedSize(true)
+        adapter = personsAdapter
+    }
+
+    with(tv_recycler_view_list){
+        itemAnimator = DefaultItemAnimator()
+        setHasFixedSize(true)
+        adapter = tvsAdapter
     }
 }
 
