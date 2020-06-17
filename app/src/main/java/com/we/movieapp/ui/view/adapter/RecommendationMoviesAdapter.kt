@@ -9,11 +9,11 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.we.movieapp.R
 import com.we.movieapp.databinding.MovieListItemBinding
-import com.we.movieapp.ui.entities.MovieUiModel
+import com.we.movieapp.domain.entities.MovieEntity
 
 class RecommendationMoviesAdapter : RecyclerView.Adapter<RecommendationMoviesAdapter.ViewHolder>() {
 
-    private val movies: MutableList<MovieUiModel> = ArrayList()
+    private val movies: MutableList<MovieEntity> = ArrayList()
     private var layoutInflater: LayoutInflater? = null
 
     var onMovieClickListener: OnMovieClickListener? = null
@@ -68,7 +68,7 @@ class RecommendationMoviesAdapter : RecyclerView.Adapter<RecommendationMoviesAda
 
     override fun getItemCount() = movies.size
 
-    fun submitList(newMovies: List<MovieUiModel>?) {
+    fun submitList(newMovies: List<MovieEntity>?) {
         newMovies?.let {
             movies.addAll(it)
             val uniqueMovieList = movies.distinctBy { movie ->

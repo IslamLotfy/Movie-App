@@ -2,9 +2,9 @@ package com.we.movieapp.ui.viewmodel.moviedetailviewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.we.movieapp.domain.entities.MovieEntity
 import com.we.movieapp.domain.usecases.MovieUseCase
-import com.we.movieapp.ui.entities.MovieUiModel
-import com.we.movieapp.ui.mapper.MovieMapperUi
+
 import com.we.movieapp.ui.utils.ViewState
 import com.we.movieapp.ui.viewmodel.BaseSchedulerProvider
 import com.we.movieapp.ui.viewmodel.BaseViewModel
@@ -13,11 +13,10 @@ import javax.inject.Inject
 
 class MovieDetailsViewModel @Inject constructor(
     private val useCase: MovieUseCase,
-    private val mapper: MovieMapperUi,
     baseSchedulerProvider: BaseSchedulerProvider): BaseViewModel(baseSchedulerProvider) {
 
-    fun getMovieDetails(movieId: Int): LiveData<ViewState<MovieUiModel>> {
-        val moviesLiveData = MutableLiveData<ViewState<MovieUiModel>>()
+    fun getMovieDetails(movieId: Int): LiveData<ViewState<MovieEntity>> {
+        val moviesLiveData = MutableLiveData<ViewState<MovieEntity>>()
 
         execute(
             loadingConsumer = Consumer {
@@ -28,7 +27,7 @@ class MovieDetailsViewModel @Inject constructor(
             successConsumer = Consumer { movieItemList ->
                 movieItemList?.let {
                     moviesLiveData.postValue(
-                        ViewState.success(mapper.mapToUiModel(it))
+                        ViewState.success(it)
                     )
                 }
             },
@@ -44,9 +43,9 @@ class MovieDetailsViewModel @Inject constructor(
 
     }
 
-    fun getSimilarMovies(movieId: Int): LiveData<ViewState<List<MovieUiModel>>> {
+    fun getSimilarMovies(movieId: Int): LiveData<ViewState<List<MovieEntity>>> {
 
-        val moviesLiveData = MutableLiveData<ViewState<List<MovieUiModel>>>()
+        val moviesLiveData = MutableLiveData<ViewState<List<MovieEntity>>>()
 
         execute(
             loadingConsumer = Consumer {
@@ -57,7 +56,7 @@ class MovieDetailsViewModel @Inject constructor(
             successConsumer = Consumer { movieItemList ->
                 movieItemList?.let {
                     moviesLiveData.postValue(
-                        ViewState.success(mapper.mapToUiModelList(it))
+                        ViewState.success(it)
                     )
                 }
             },
@@ -73,8 +72,8 @@ class MovieDetailsViewModel @Inject constructor(
 
     }
 
-    fun getRecommendationMovies(movieId: Int): LiveData<ViewState<List<MovieUiModel>>> {
-        val moviesLiveData = MutableLiveData<ViewState<List<MovieUiModel>>>()
+    fun getRecommendationMovies(movieId: Int): LiveData<ViewState<List<MovieEntity>>> {
+        val moviesLiveData = MutableLiveData<ViewState<List<MovieEntity>>>()
 
         execute(
             loadingConsumer = Consumer {
@@ -85,7 +84,7 @@ class MovieDetailsViewModel @Inject constructor(
             successConsumer = Consumer { movieItemList ->
                 movieItemList?.let {
                     moviesLiveData.postValue(
-                        ViewState.success(mapper.mapToUiModelList(it))
+                        ViewState.success(it)
                     )
                 }
             },

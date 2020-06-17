@@ -1,27 +1,20 @@
 package com.we.movieapp.domain.entities
 
-data class MovieEntity(
+import com.google.gson.annotations.SerializedName
 
-    val id: Int = 0,
-
-    val overview: String? = null,
-
-    val originalLanguage: String? = null,
-
-    val originalTitle: String? = null,
-
-    val title: String? = null,
-
-    val posterPath: String? = null,
-
-    val releaseDate: String? = null,
-
-    val popularity: Double = 0.0,
-
-    val voteAverage: Double = 0.0,
-
-    val isAdult: Boolean = false,
-
-    val voteCount: Int = 0
-
-)
+interface  MovieEntity {
+    val id: Int
+    val overview: String?
+    val originalLanguage: String?
+    val originalTitle: String?
+    val title: String?
+    val posterPath: String?
+    val releaseDate: String?
+    val popularity: Double?
+    val voteAverage: Double?
+    val isAdult: Boolean?
+    val voteCount: Int?
+    val backdropPath: String
+    val genreIds: List<Int>
+    val video: Boolean
+}

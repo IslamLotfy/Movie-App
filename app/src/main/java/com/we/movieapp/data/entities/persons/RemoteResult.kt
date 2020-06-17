@@ -2,22 +2,23 @@ package com.we.movieapp.data.entities.persons
 
 
 import com.google.gson.annotations.SerializedName
+import com.we.movieapp.domain.entities.PersonEntity
 
 data class RemoteResult(
     @SerializedName("adult")
-    val adult: Boolean,
+    override val isAdult: Boolean,
     @SerializedName("gender")
     val gender: Int,
     @SerializedName("id")
-    val id: Int,
+    override val id: Int,
     @SerializedName("known_for")
     val knownFor: List<KnownFor>,
     @SerializedName("known_for_department")
     val knownForDepartment: String,
     @SerializedName("name")
-    val name: String,
+    override val name: String,
     @SerializedName("popularity")
-    val popularity: Double,
+    override val popularity: Double,
     @SerializedName("profile_path")
-    val profilePath: String
-)
+    override val profilePath: String
+):PersonEntity

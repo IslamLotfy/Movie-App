@@ -2,34 +2,35 @@ package com.we.movieapp.data.entities.movies
 
 
 import com.google.gson.annotations.SerializedName
+import com.we.movieapp.domain.entities.MovieEntity
 
 data class MovieRemote(
     @SerializedName("adult")
-    val adult: Boolean,
+    override val isAdult: Boolean,
     @SerializedName("backdrop_path")
-    val backdropPath: String,
+    override val backdropPath: String,
     @SerializedName("genre_ids")
-    val genreIds: List<Int>,
+    override val genreIds: List<Int>,
     @SerializedName("id")
-    val id: Int,
+    override val id: Int,
     @SerializedName("original_language")
-    val originalLanguage: String,
+    override val originalLanguage: String,
     @SerializedName("original_title")
-    val originalTitle: String,
+    override val originalTitle: String,
     @SerializedName("overview")
-    val overview: String,
+    override val overview: String,
     @SerializedName("popularity")
-    val popularity: Double,
+    override val popularity: Double,
     @SerializedName("poster_path")
-    val posterPath: String,
+    override val posterPath: String,
     @SerializedName("release_date")
-    val releaseDate: String,
+    override val releaseDate: String,
     @SerializedName("title")
-    val title: String,
+    override val title: String,
     @SerializedName("video")
-    val video: Boolean,
+    override val video: Boolean,
     @SerializedName("vote_average")
-    val voteAverage: Double,
+    override val voteAverage: Double,
     @SerializedName("vote_count")
-    val voteCount: Int
-)
+    override val voteCount: Int
+): MovieEntity

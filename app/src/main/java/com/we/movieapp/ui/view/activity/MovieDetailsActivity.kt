@@ -1,25 +1,18 @@
 package com.we.movieapp.ui.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
 import com.we.movieapp.R
-import com.we.movieapp.domain.entities.MovieEntity
 import com.we.movieapp.ui.EXTRA_MOVIE
-import com.we.movieapp.ui.entities.MovieUiModel
 import com.we.movieapp.ui.setVisibility
-import com.we.movieapp.ui.startDetailsScreen
 import com.we.movieapp.ui.utils.ViewState
-import com.we.movieapp.ui.view.adapter.HomeMovieAdapter
 import com.we.movieapp.ui.view.adapter.RecommendationMoviesAdapter
 import com.we.movieapp.ui.view.adapter.SimilarMoviesAdapter
-import com.we.movieapp.ui.viewmodel.homeviewmodel.HomeViewModel
 import com.we.movieapp.ui.viewmodel.moviedetailviewmodel.MovieDetailsViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_movie_details.*
@@ -46,7 +39,7 @@ class MovieDetailsActivity : DaggerAppCompatActivity() {
         configUI()
         movieDetailsViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieDetailsViewModel::class.java)
 
-        movieDetailsViewModel.getMovieDetails(intent.getIntExtra(EXTRA_MOVIE,38700)).observe(this, Observer<ViewState<MovieUiModel>> {movieViewState ->
+        movieDetailsViewModel.getMovieDetails(intent.getIntExtra(EXTRA_MOVIE,38700)).observe(this, Observer { movieViewState ->
 
             when (movieViewState.status) {
                 ViewState.Status.LOADING -> {
@@ -89,7 +82,7 @@ class MovieDetailsActivity : DaggerAppCompatActivity() {
     }
 
     private fun getRecommendationMovies() {
-        movieDetailsViewModel.getRecommendationMovies(38700).observe(this, Observer<ViewState<List<MovieUiModel>>> {movieViewState->
+        movieDetailsViewModel.getRecommendationMovies(38700).observe(this, Observer { movieViewState->
 
             when (movieViewState.status) {
                 ViewState.Status.LOADING -> {
@@ -112,7 +105,7 @@ class MovieDetailsActivity : DaggerAppCompatActivity() {
 
     private fun getSimilarMovies() {
 
-        movieDetailsViewModel.getSimilarMovies(38700).observe(this, Observer<ViewState<List<MovieUiModel>>> {movieViewState->
+        movieDetailsViewModel.getSimilarMovies(38700).observe(this, Observer { movieViewState->
 
             when (movieViewState.status) {
                 ViewState.Status.LOADING -> {

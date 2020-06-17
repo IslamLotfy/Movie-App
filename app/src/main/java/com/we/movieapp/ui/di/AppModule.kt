@@ -5,22 +5,20 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
 import com.we.movieapp.BuildConfig
-import com.we.movieapp.data.network.ApiKeyInterceptor
-import com.we.movieapp.ui.viewmodel.BaseSchedulerProvider
-import com.we.movieapp.data.repository.RemoteRepository
-import com.we.movieapp.data.network.ServiceApi
-import com.we.movieapp.data.mapper.MovieMapper
-import com.we.movieapp.data.mapper.PersonMapper
 import com.we.movieapp.data.mapper.TVMapper
+import com.we.movieapp.data.network.ApiKeyInterceptor
+import com.we.movieapp.data.network.ServiceApi
+import com.we.movieapp.data.repository.RemoteRepository
+import com.we.movieapp.domain.Repository
 import com.we.movieapp.domain.usecases.MovieUseCase
-import com.we.movieapp.ui.viewmodel.SchedulerProvider
-import com.we.movieapp.ui.mapper.MovieMapperUi
-import com.we.movieapp.ui.mapper.PersonMapperUi
 import com.we.movieapp.ui.mapper.TVMapperUi
 import com.we.movieapp.ui.view.adapter.*
+import com.we.movieapp.ui.viewmodel.BaseSchedulerProvider
+import com.we.movieapp.ui.viewmodel.SchedulerProvider
 import dagger.Module
 import dagger.Provides
-import okhttp3.*
+import okhttp3.Cache
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -76,23 +74,6 @@ class AppModule {
     fun getSimilarMoviesAdapter() =
         SimilarMoviesAdapter()
 
-
-    @Provides
-    @Singleton
-    fun getMovieMapper() = MovieMapper()
-
-    @Provides
-    @Singleton
-    fun getMovieMapperUi() = MovieMapperUi()
-
-    @Provides
-    @Singleton
-    fun getPersonMapper() = PersonMapper()
-
-    @Provides
-    @Singleton
-    fun getPersonMapperUi() = PersonMapperUi()
-
     @Provides
     @Singleton
     fun getTVMapper() = TVMapper()
@@ -101,14 +82,6 @@ class AppModule {
     @Singleton
     fun getTVMapperUi() = TVMapperUi()
 
-
-//    @Provides
-//    @Singleton
-//    fun getInterceptor(): HttpLoggingInterceptor {
-//        val interceptor = HttpLoggingInterceptor()
-//        interceptor.level = HttpLoggingInterceptor.Level.BODY
-//        return interceptor
-//    }
 
     @Provides
     @Singleton
@@ -179,8 +152,9 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providesMoviesRepository(service: ServiceApi, mapper: MovieMapper, personMapper: PersonMapper, tvMapper: TVMapper) =
-        RemoteRepository(service, mapper, personMapper, tvMapper)
+    fun providesMoviesRepository(service: ServiceApi, tvMapper: TVMapper): Repository {
+        return RemoteRepository(service, tvMapper)
+    }
 
     @Singleton
     @Provides

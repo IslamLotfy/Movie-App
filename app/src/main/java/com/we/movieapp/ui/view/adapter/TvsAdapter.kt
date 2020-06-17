@@ -9,8 +9,6 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.we.movieapp.R
 import com.we.movieapp.databinding.MovieListItemBinding
-import com.we.movieapp.ui.entities.MovieUiModel
-import com.we.movieapp.ui.entities.PersonUiModel
 import com.we.movieapp.ui.entities.TvUiModel
 
 class TvsAdapter : RecyclerView.Adapter<TvsAdapter.ViewHolder>() {

@@ -17,7 +17,6 @@ import javax.inject.Singleton
             ViewModelFactory::class,
             ActivityBuildersModule::class,
             HomeViewModelModule::class,
-
             AppModule::class
             ]
 )

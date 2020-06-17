@@ -5,9 +5,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.we.movieapp.R
+import com.we.movieapp.domain.entities.MovieEntity
+import com.we.movieapp.domain.entities.PersonEntity
 import com.we.movieapp.ui.bindViews
-import com.we.movieapp.ui.entities.MovieUiModel
-import com.we.movieapp.ui.entities.PersonUiModel
 import com.we.movieapp.ui.entities.TvUiModel
 import com.we.movieapp.ui.setVisibility
 import com.we.movieapp.ui.startDetailsScreen
@@ -75,7 +75,7 @@ class HomeActivity : DaggerAppCompatActivity() {
 
     private fun getMovies() {
         homeViewModel.getMovies(1).observe(this,
-            Observer<ViewState<List<MovieUiModel>>> { movieViewState ->
+            Observer<ViewState<List<MovieEntity>>> { movieViewState ->
                 when (movieViewState.status) {
                     ViewState.Status.LOADING -> {
                         setVisibility(isLoading = true)
@@ -117,7 +117,7 @@ class HomeActivity : DaggerAppCompatActivity() {
 
     private fun getPersons(){
         homeViewModel.getPersons(1).observe(this,
-            Observer<ViewState<List<PersonUiModel>>> { personViewState ->
+            Observer<ViewState<List<PersonEntity>>> { personViewState ->
                 when (personViewState.status) {
                     ViewState.Status.LOADING -> {
                         setVisibility(isLoading = true)
