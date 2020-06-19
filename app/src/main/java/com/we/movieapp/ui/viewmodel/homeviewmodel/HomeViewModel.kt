@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.we.movieapp.domain.entities.MovieEntity
 import com.we.movieapp.domain.entities.PersonEntity
+import com.we.movieapp.domain.usecases.*
 import com.we.movieapp.ui.viewmodel.BaseSchedulerProvider
 import com.we.movieapp.ui.viewmodel.BaseViewModel
-import com.we.movieapp.domain.usecases.MovieUseCase
-import com.we.movieapp.domain.usecases.PersonUseCase
-import com.we.movieapp.domain.usecases.TvUseCase
 import com.we.movieapp.ui.utils.ViewState
 import com.we.movieapp.ui.entities.TvUiModel
 import com.we.movieapp.ui.mapper.TVMapperUi
@@ -17,9 +15,10 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     baseSchedulerProvider: BaseSchedulerProvider,
-    private val useCase: MovieUseCase,
-    private val personUseCase: PersonUseCase,
-    private val tvUseCase: TvUseCase,
+    private val getMoviesUseCase: GetMoviesUseCase,
+    private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
+    private val personUseCase: GetPersonUseCase,
+    private val tvUseCase: GetTvUseCase,
     private val tvMapper: TVMapperUi
 ) : BaseViewModel(baseSchedulerProvider) {
 
@@ -45,7 +44,7 @@ class HomeViewModel @Inject constructor(
                     ViewState.error(throwable.message)
                 )
             },
-            useCase = useCase.getMovies(pageNumber)//7wzd5n
+            useCase = getMoviesUseCase.getMovies(pageNumber)//7wzd5n
         )
 
         return moviesLiveData
@@ -73,7 +72,7 @@ class HomeViewModel @Inject constructor(
                     ViewState.error(throwable.message)
                 )
             },
-            useCase = useCase.getTopRatedMovies(pageNumber)//7wzd5n
+            useCase = getTopRatedMoviesUseCase.getTopRatedMovies(pageNumber)//7wzd5n
         )
 
         return moviesLiveData

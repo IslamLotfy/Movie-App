@@ -39,9 +39,9 @@ class RemoteRepository @Inject constructor(
         }
     }
 
-    override fun getMovie(pageNumber: Int): Flowable<MovieEntity> {
+    override fun getMovie(movieId: Int): Flowable<MovieEntity> {
 
-        return serviceApi.getMovie(pageNumber).map { movieRemote ->
+        return serviceApi.getMovie(movieId).map { movieRemote ->
            movieRemote
         }
 

@@ -10,7 +10,7 @@ import com.we.movieapp.data.network.ApiKeyInterceptor
 import com.we.movieapp.data.network.ServiceApi
 import com.we.movieapp.data.repository.RemoteRepository
 import com.we.movieapp.domain.Repository
-import com.we.movieapp.domain.usecases.MovieUseCase
+import com.we.movieapp.domain.usecases.*
 import com.we.movieapp.ui.mapper.TVMapperUi
 import com.we.movieapp.ui.view.adapter.*
 import com.we.movieapp.ui.viewmodel.BaseSchedulerProvider
@@ -158,6 +158,29 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providesMovieUseCase(repository: RemoteRepository) = MovieUseCase(repository)
+    fun providesGetMovieUseCase(repository: Repository) = GetMoviesUseCase(repository)
 
+    @Singleton
+    @Provides
+    fun providesGetMovieDetailUseCase(repository: Repository) = GetMovieDetailUseCase(repository)
+
+    @Singleton
+    @Provides
+    fun providesGetTopRatedMoviesUseCase(repository: Repository) = GetTopRatedMoviesUseCase(repository)
+
+    @Singleton
+    @Provides
+    fun providesGetSimilarMoviesUseCase(repository: Repository)  = GetSimilarMoviesUseCase(repository)
+
+    @Singleton
+    @Provides
+    fun providesGetRecommendedMoviesUseCase(repository: Repository) = GetRecommendedMoviesUseCase(repository)
+
+    @Singleton
+    @Provides
+    fun providesGetPersonUseCase(repository: Repository) = GetPersonUseCase(repository)
+
+    @Singleton
+    @Provides
+    fun providesGetTvsUseCase(repository: Repository) = GetTvUseCase(repository)
 }
