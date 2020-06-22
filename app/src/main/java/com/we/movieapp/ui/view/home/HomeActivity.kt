@@ -1,4 +1,4 @@
-package com.we.movieapp.ui.view.activity
+package com.we.movieapp.ui.view.home
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -12,10 +12,6 @@ import com.we.movieapp.ui.entities.TvUiModel
 import com.we.movieapp.ui.setVisibility
 import com.we.movieapp.ui.startDetailsScreen
 import com.we.movieapp.ui.utils.ViewState
-import com.we.movieapp.ui.view.adapter.HomeMovieAdapter
-import com.we.movieapp.ui.view.adapter.PersonsAdapter
-import com.we.movieapp.ui.view.adapter.TvsAdapter
-import com.we.movieapp.ui.viewmodel.homeviewmodel.HomeViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -64,18 +60,20 @@ class HomeActivity : DaggerAppCompatActivity() {
         }
 
         configViewModel()
-        getMovies()
-        getPersons()
-        getTvs()
+
+        observeOnMovies()
+        observeOnTVSeries()
+        observeOnPersons()
     }
 
     private fun configViewModel() {
         homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+        lifecycle.addObserver(homeViewModel)
     }
 
-    private fun getMovies() {
-        homeViewModel.getMovies(1).observe(this,
-            Observer<ViewState<List<MovieEntity>>> { movieViewState ->
+    private fun observeOnMovies() {
+        homeViewModel.topRatedMovies.observe(this,
+            Observer { movieViewState ->
                 when (movieViewState.status) {
                     ViewState.Status.LOADING -> {
                         setVisibility(isLoading = true)
@@ -94,9 +92,9 @@ class HomeActivity : DaggerAppCompatActivity() {
         )
     }
 
-    private fun getTvs() {
-        homeViewModel.getTvs(1).observe(this,
-            Observer<ViewState<List<TvUiModel>>> { tvViewState ->
+    private fun observeOnTVSeries() {
+        homeViewModel.tvSeries.observe(this,
+            Observer { tvViewState ->
                 when (tvViewState.status) {
                     ViewState.Status.LOADING -> {
                         setVisibility(isLoading = true)
@@ -115,9 +113,9 @@ class HomeActivity : DaggerAppCompatActivity() {
         )
     }
 
-    private fun getPersons(){
-        homeViewModel.getPersons(1).observe(this,
-            Observer<ViewState<List<PersonEntity>>> { personViewState ->
+    private fun observeOnPersons(){
+        homeViewModel.persons.observe(this,
+            Observer { personViewState ->
                 when (personViewState.status) {
                     ViewState.Status.LOADING -> {
                         setVisibility(isLoading = true)

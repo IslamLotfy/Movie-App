@@ -2,11 +2,9 @@ package com.we.movieapp.ui
 
 import android.content.Intent
 import android.view.View
-import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.we.movieapp.R
-import com.we.movieapp.ui.view.activity.HomeActivity
-import com.we.movieapp.ui.view.activity.MovieDetailsActivity
+import com.we.movieapp.ui.view.home.HomeActivity
+import com.we.movieapp.ui.view.detail.MovieDetailsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 fun HomeActivity.showMessage(message: String) {

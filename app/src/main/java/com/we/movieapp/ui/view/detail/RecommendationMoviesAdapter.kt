@@ -1,4 +1,4 @@
-package com.we.movieapp.ui.view.adapter
+package com.we.movieapp.ui.view.detail
 
 import android.os.Handler
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.we.movieapp.R
 import com.we.movieapp.databinding.MovieListItemBinding
 import com.we.movieapp.domain.entities.MovieEntity
 
-class SimilarMoviesAdapter : RecyclerView.Adapter<SimilarMoviesAdapter.ViewHolder>() {
+class RecommendationMoviesAdapter : RecyclerView.Adapter<RecommendationMoviesAdapter.ViewHolder>() {
 
     private val movies: MutableList<MovieEntity> = ArrayList()
     private var layoutInflater: LayoutInflater? = null

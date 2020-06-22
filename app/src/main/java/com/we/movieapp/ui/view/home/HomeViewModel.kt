@@ -1,7 +1,6 @@
-package com.we.movieapp.ui.viewmodel.homeviewmodel
+package com.we.movieapp.ui.view.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.we.movieapp.domain.entities.MovieEntity
 import com.we.movieapp.domain.entities.PersonEntity
 import com.we.movieapp.domain.usecases.*
@@ -15,122 +14,95 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     baseSchedulerProvider: BaseSchedulerProvider,
-    private val getMoviesUseCase: GetMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val personUseCase: GetPersonUseCase,
     private val tvUseCase: GetTvUseCase,
     private val tvMapper: TVMapperUi
-) : BaseViewModel(baseSchedulerProvider) {
+) : BaseViewModel(baseSchedulerProvider), LifecycleObserver {
 
-    fun getMovies(pageNumber: Int): LiveData<ViewState<List<MovieEntity>>> {
+    val topRatedMovies = MutableLiveData<ViewState<List<MovieEntity>>>()
+    val persons = MutableLiveData<ViewState<List<PersonEntity>>>()
+    val tvSeries = MutableLiveData<ViewState<List<TvUiModel>>>()
+    val pageNumber = 1
 
-        val moviesLiveData = MutableLiveData<ViewState<List<MovieEntity>>>()
-
-        execute(
-            loadingConsumer = Consumer {
-                moviesLiveData.postValue(
-                    ViewState.loading()
-                )
-            },
-            successConsumer = Consumer { movieItemList ->
-                movieItemList?.let {
-                    moviesLiveData.postValue(
-                        ViewState.success(it)
-                    )
-                }
-            },
-            throwableConsumer = Consumer { throwable ->
-                moviesLiveData.postValue(
-                    ViewState.error(throwable.message)
-                )
-            },
-            useCase = getMoviesUseCase.getMovies(pageNumber)//7wzd5n
-        )
-
-        return moviesLiveData
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun getDataLists(){
+        getTopRatedMovies(pageNumber)
+        getPersons(pageNumber)
+        getTvs(pageNumber)
     }
 
-    fun getTopRatedMovies(pageNumber: Int): LiveData<ViewState<List<MovieEntity>>> {
-
-        val moviesLiveData = MutableLiveData<ViewState<List<MovieEntity>>>()
+    fun getTopRatedMovies(pageNumber: Int) {
 
         execute(
             loadingConsumer = Consumer {
-                moviesLiveData.postValue(
+                topRatedMovies.postValue(
                     ViewState.loading()
                 )
             },
             successConsumer = Consumer { movieItemList ->
                 movieItemList?.let {
-                    moviesLiveData.postValue(
+                    topRatedMovies.postValue(
                         ViewState.success(it)
                     )
                 }
             },
             throwableConsumer = Consumer { throwable ->
-                moviesLiveData.postValue(
+                topRatedMovies.postValue(
                     ViewState.error(throwable.message)
                 )
             },
             useCase = getTopRatedMoviesUseCase.getTopRatedMovies(pageNumber)//7wzd5n
         )
-
-        return moviesLiveData
     }
 
-    fun getPersons(pageNumber: Int): LiveData<ViewState<List<PersonEntity>>> {
-        val personsLiveData = MutableLiveData<ViewState<List<PersonEntity>>>()
+    fun getPersons(pageNumber: Int){
 
         execute(
             loadingConsumer = Consumer {
-                personsLiveData.postValue(
+                persons.postValue(
                     ViewState.loading()
                 )
             },
             successConsumer = Consumer { personItemList ->
                 personItemList?.let {
-                    personsLiveData.postValue(
+                    persons.postValue(
                         ViewState.success(it)
                     )
                 }
             },
             throwableConsumer = Consumer { throwable ->
-                personsLiveData.postValue(
+                persons.postValue(
                     ViewState.error(throwable.message)
                 )
             },
             useCase = personUseCase.getPersons(pageNumber)//7wzd5n
         )
-
-        return personsLiveData
     }
 
-    fun getTvs(pageNumber: Int): LiveData<ViewState<List<TvUiModel>>> {
+    fun getTvs(pageNumber: Int) {
 
-        val tvsLiveData = MutableLiveData<ViewState<List<TvUiModel>>>()
 
         execute(
             loadingConsumer = Consumer {
-                tvsLiveData.postValue(
+                tvSeries.postValue(
                     ViewState.loading()
                 )
             },
             successConsumer = Consumer { tvItemList ->
                 tvItemList?.let {
-                    tvsLiveData.postValue(
+                    tvSeries.postValue(
                         ViewState.success(tvMapper.mapToUiModelList(it))
                     )
                 }
             },
             throwableConsumer = Consumer { throwable ->
-                tvsLiveData.postValue(
+                tvSeries.postValue(
                     ViewState.error(throwable.message)
                 )
             },
             useCase = tvUseCase.getTvs(pageNumber)//7wzd5n
         )
-
-        return tvsLiveData
     }
 
 }

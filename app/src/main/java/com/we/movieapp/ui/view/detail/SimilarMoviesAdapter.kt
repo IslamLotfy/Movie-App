@@ -1,4 +1,4 @@
-package com.we.movieapp.ui.view.adapter
+package com.we.movieapp.ui.view.detail
 
 import android.os.Handler
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.we.movieapp.R
 import com.we.movieapp.databinding.MovieListItemBinding
 import com.we.movieapp.domain.entities.MovieEntity
 
-class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.ViewHolder>() {
+class SimilarMoviesAdapter : RecyclerView.Adapter<SimilarMoviesAdapter.ViewHolder>() {
 
     private val movies: MutableList<MovieEntity> = ArrayList()
     private var layoutInflater: LayoutInflater? = null
@@ -45,7 +45,7 @@ class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.ViewHolder>() {
 //        viewHolder.binding.movie = movies[position]
 
 
-        viewHolder.binding.movieTitle.text = movies[position].title
+//        viewHolder.binding.movieTitle.text = movies[position].title
         Handler().postDelayed(Runnable {  Picasso.get()
             .load("https://image.tmdb.org/t/p/w200/${movies[position].posterPath}")
             .into(viewHolder.binding.movieImage, object : Callback {

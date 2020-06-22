@@ -12,7 +12,8 @@ import com.we.movieapp.data.repository.RemoteRepository
 import com.we.movieapp.domain.Repository
 import com.we.movieapp.domain.usecases.*
 import com.we.movieapp.ui.mapper.TVMapperUi
-import com.we.movieapp.ui.view.adapter.*
+import com.we.movieapp.ui.view.home.*
+import com.we.movieapp.ui.view.detail.*
 import com.we.movieapp.ui.viewmodel.BaseSchedulerProvider
 import com.we.movieapp.ui.viewmodel.SchedulerProvider
 import dagger.Module

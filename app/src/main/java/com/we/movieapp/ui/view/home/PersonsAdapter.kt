@@ -1,4 +1,4 @@
-package com.we.movieapp.ui.view.adapter
+package com.we.movieapp.ui.view.home
 
 import android.os.Handler
 import android.view.LayoutInflater

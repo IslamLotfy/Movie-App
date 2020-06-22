@@ -1,7 +1,7 @@
-package com.we.movieapp.ui.viewmodel.moviedetailviewmodel
+package com.we.movieapp.ui.view.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.view.View
+import androidx.lifecycle.*
 import com.we.movieapp.domain.entities.MovieEntity
 import com.we.movieapp.domain.usecases.GetMovieDetailUseCase
 import com.we.movieapp.domain.usecases.GetRecommendedMoviesUseCase
@@ -16,90 +16,86 @@ class MovieDetailsViewModel @Inject constructor(
     private val getMovieDetailsUseCase: GetMovieDetailUseCase,
     private val getSimilarMoviesUseCase: GetSimilarMoviesUseCase,
     private val getRecommendedMoviesUseCase: GetRecommendedMoviesUseCase,
-    baseSchedulerProvider: BaseSchedulerProvider): BaseViewModel(baseSchedulerProvider) {
+    baseSchedulerProvider: BaseSchedulerProvider): BaseViewModel(baseSchedulerProvider), LifecycleObserver {
 
-    fun getMovieDetails(movieId: Int): LiveData<ViewState<MovieEntity>> {
-        val moviesLiveData = MutableLiveData<ViewState<MovieEntity>>()
+    val movieDetail = MutableLiveData<ViewState<MovieEntity>>()
+    val similarMovies = MutableLiveData<ViewState<List<MovieEntity>>>()
+    val recommendedMovies = MutableLiveData<ViewState<List<MovieEntity>>>()
+    var movieId: Int = 38700
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun getData(){
+        getMovieDetails(movieId)
+        getSimilarMovies(movieId)
+        getRecommendedMovies(movieId)
+    }
+
+    fun getMovieDetails(movieId: Int) {
         execute(
             loadingConsumer = Consumer {
-                moviesLiveData.postValue(
+                movieDetail.postValue(
                     ViewState.loading()
                 )
             },
             successConsumer = Consumer { movieItemList ->
                 movieItemList?.let {
-                    moviesLiveData.postValue(
+                    movieDetail.postValue(
                         ViewState.success(it)
                     )
                 }
             },
             throwableConsumer = Consumer { throwable ->
-                moviesLiveData.postValue(
+                movieDetail.postValue(
                     ViewState.error(throwable.message)
                 )
             },
             useCase = getMovieDetailsUseCase.getMovieDetail(movieId)//7wzd5n
         )
-
-        return moviesLiveData
-
     }
 
-    fun getSimilarMovies(movieId: Int): LiveData<ViewState<List<MovieEntity>>> {
-
-        val moviesLiveData = MutableLiveData<ViewState<List<MovieEntity>>>()
-
+    fun getSimilarMovies(movieId: Int){
         execute(
             loadingConsumer = Consumer {
-                moviesLiveData.postValue(
+                similarMovies.postValue(
                     ViewState.loading()
                 )
             },
             successConsumer = Consumer { movieItemList ->
                 movieItemList?.let {
-                    moviesLiveData.postValue(
+                    similarMovies.postValue(
                         ViewState.success(it)
                     )
                 }
             },
             throwableConsumer = Consumer { throwable ->
-                moviesLiveData.postValue(
+                similarMovies.postValue(
                     ViewState.error(throwable.message)
                 )
             },
             useCase = getSimilarMoviesUseCase.getSimilarMovies(movieId)//7wzd5n
         )
-
-        return moviesLiveData
-
     }
 
-    fun getRecommendationMovies(movieId: Int): LiveData<ViewState<List<MovieEntity>>> {
-        val moviesLiveData = MutableLiveData<ViewState<List<MovieEntity>>>()
-
+    fun getRecommendedMovies(movieId: Int) {
         execute(
             loadingConsumer = Consumer {
-                moviesLiveData.postValue(
+                recommendedMovies.postValue(
                     ViewState.loading()
                 )
             },
             successConsumer = Consumer { movieItemList ->
                 movieItemList?.let {
-                    moviesLiveData.postValue(
+                    recommendedMovies.postValue(
                         ViewState.success(it)
                     )
                 }
             },
             throwableConsumer = Consumer { throwable ->
-                moviesLiveData.postValue(
+                recommendedMovies.postValue(
                     ViewState.error(throwable.message)
                 )
             },
             useCase = getRecommendedMoviesUseCase.getRecommendedMovies(movieId)//7wzd5n
         )
-
-        return moviesLiveData
-
     }
 }

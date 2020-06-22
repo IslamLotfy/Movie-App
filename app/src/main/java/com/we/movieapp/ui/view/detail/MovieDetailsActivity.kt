@@ -1,4 +1,4 @@
-package com.we.movieapp.ui.view.activity
+package com.we.movieapp.ui.view.detail
 
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +11,6 @@ import com.we.movieapp.R
 import com.we.movieapp.ui.EXTRA_MOVIE
 import com.we.movieapp.ui.setVisibility
 import com.we.movieapp.ui.utils.ViewState
-import com.we.movieapp.ui.view.adapter.RecommendationMoviesAdapter
-import com.we.movieapp.ui.view.adapter.SimilarMoviesAdapter
-import com.we.movieapp.ui.viewmodel.moviedetailviewmodel.MovieDetailsViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import javax.inject.Inject
@@ -37,16 +34,16 @@ class MovieDetailsActivity : DaggerAppCompatActivity() {
         supportActionBar?.title = intent.getStringExtra(EXTRA_MOVIE)
 
         configUI()
-        movieDetailsViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieDetailsViewModel::class.java)
-
-        movieDetailsViewModel.getMovieDetails(intent.getIntExtra(EXTRA_MOVIE,38700)).observe(this, Observer { movieViewState ->
-
+        movieDetailsViewModel = ViewModelProviders.of(this, viewModelFactory).get(
+            MovieDetailsViewModel::class.java)
+        lifecycle.addObserver(movieDetailsViewModel)
+        movieDetailsViewModel.movieId = intent.getIntExtra(EXTRA_MOVIE,38700)
+        movieDetailsViewModel.movieDetail.observe(this, Observer { movieViewState ->
             when (movieViewState.status) {
                 ViewState.Status.LOADING -> {
                     setVisibility(isLoading = true)
                     Log.e("fghj","hjhjh")
                 }
-
                 ViewState.Status.SUCCESS -> {
                     setVisibility(isLoading = false)
                     Log.e("fghj",movieViewState.data?.title)
@@ -61,9 +58,8 @@ class MovieDetailsActivity : DaggerAppCompatActivity() {
                     movie_details_desc.text = movieViewState.data?.overview
                     movie_details_language.text = getString(R.string.language, movieViewState.data?.originalLanguage)
                     movie_details_release_date.text = getString(R.string.release_date, movieViewState.data?.releaseDate)
-                    getSimilarMovies()
-                    getRecommendationMovies()
-
+                    observeOnRecommendedMovies()
+                    observeOnSimilarMovies()
                 }
 
                 ViewState.Status.ERROR -> {
@@ -81,9 +77,8 @@ class MovieDetailsActivity : DaggerAppCompatActivity() {
 
     }
 
-    private fun getRecommendationMovies() {
-        movieDetailsViewModel.getRecommendationMovies(38700).observe(this, Observer { movieViewState->
-
+    private fun observeOnRecommendedMovies() {
+        movieDetailsViewModel.recommendedMovies.observe(this, Observer { movieViewState->
             when (movieViewState.status) {
                 ViewState.Status.LOADING -> {
                     setVisibility(isLoading = true)
@@ -103,21 +98,18 @@ class MovieDetailsActivity : DaggerAppCompatActivity() {
         })
     }
 
-    private fun getSimilarMovies() {
+    private fun observeOnSimilarMovies() {
 
-        movieDetailsViewModel.getSimilarMovies(38700).observe(this, Observer { movieViewState->
-
+        movieDetailsViewModel.similarMovies.observe(this, Observer { movieViewState->
             when (movieViewState.status) {
                 ViewState.Status.LOADING -> {
                     setVisibility(isLoading = true)
                 }
-
                 ViewState.Status.SUCCESS -> {
                     setVisibility(isLoading = false)
                     similarMoviesAdapter.submitList(movieViewState.data)
 
                 }
-
                 ViewState.Status.ERROR -> {
                     setVisibility(isLoading = false, errorMessage = movieViewState.message)
                 }

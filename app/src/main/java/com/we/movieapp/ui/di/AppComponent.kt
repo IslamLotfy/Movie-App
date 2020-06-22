@@ -2,7 +2,6 @@ package com.we.movieapp.ui.di
 
 
 import android.app.Application
-import com.we.movieapp.ui.viewmodel.homeviewmodel.HomeViewModelModule
 import com.we.movieapp.ui.app.Movie
 import dagger.BindsInstance
 import dagger.Component
@@ -16,7 +15,6 @@ import javax.inject.Singleton
             AndroidSupportInjectionModule::class,
             ViewModelFactory::class,
             ActivityBuildersModule::class,
-            HomeViewModelModule::class,
             AppModule::class
             ]
 )

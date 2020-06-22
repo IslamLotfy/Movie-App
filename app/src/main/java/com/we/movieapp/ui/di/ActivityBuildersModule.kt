@@ -1,9 +1,9 @@
 package com.we.movieapp.ui.di
 
-import com.we.movieapp.ui.view.activity.HomeActivity
-import com.we.movieapp.ui.view.activity.MovieDetailsActivity
-import com.we.movieapp.ui.viewmodel.homeviewmodel.HomeViewModelModule
-import com.we.movieapp.ui.viewmodel.moviedetailviewmodel.MovieDetailsViewModelModule
+import com.we.movieapp.ui.view.home.HomeActivity
+import com.we.movieapp.ui.view.detail.MovieDetailsActivity
+import com.we.movieapp.ui.view.home.HomeViewModelModule
+import com.we.movieapp.ui.view.detail.MovieDetailsViewModelModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
